@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>អ្នកជំនួយសរសេរ Script លក់ម៉ូតូ</title>
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --tx:#17212d;
+  --mut:#5d6978;
+  --bd:#dfe5ee;
+  --ac:#d93a2f;
+  --acx:#ffffff;
+  --soft:#eef4ff;
+  --success:#1e9d62;
+  --shadow:0 10px 24px rgba(17,24,39,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d131b;--card:#151d29;--tx:#edf3fb;--mut:#9ca9b8;--bd:#2b3645;--ac:#ff6655;--acx:#111820;--soft:#172635;--success:#3cc98d}}
+:root[data-theme="dark"]{--bg:#0d131b;--card:#151d29;--tx:#edf3fb;--mut:#9ca9b8;--bd:#2b3645;--ac:#ff6655;--acx:#111820;--soft:#172635;--success:#3cc98d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans Khmer","Khmer OS","Segoe UI",sans-serif;line-height:1.6}
+main{max-width:900px;margin:0 auto;padding:18px 14px 40px}
+header{margin-bottom:16px}
+h1{font-size:1.38rem;margin:0 0 6px;line-height:1.3}
+.sub{color:var(--mut);margin:0;font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:.83rem;color:var(--mut);font-weight:600}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx);font:inherit;transition:border-color .15s ease,box-shadow .15s ease}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 4px rgba(217,58,47,.08)}
+textarea{min-height:82px;resize:vertical}
+.full{grid-column:1 / -1}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;border:none;border-radius:12px;padding:12px 16px;cursor:pointer;background:var(--ac);color:var(--acx);font-weight:700;transition:transform .12s ease,opacity .15s ease}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+button:disabled{opacity:.6;cursor:wait;transform:none}
+button.sec{background:transparent;color:var(--tx);border:1px solid var(--bd);font-weight:600;padding:9px 12px}
+.inline-note{font-size:.8rem;color:var(--mut);margin-top:2px}
+.status{min-height:1.2em;font-size:.9rem}
+.status.err{color:var(--ac)}
+.status.ok{color:var(--success)}
+.hide{display:none}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.9rem}
+th,td{border:1px solid var(--bd);padding:9px 8px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+#cap{white-space:pre-wrap;word-break:break-word}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;border:1px solid var(--bd);background:var(--soft);font-size:.8rem;color:var(--tx)}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>🛵 បង្កើត Script លក់ម៉ូតូ</h1>
+    <p class="sub">បំពេញព័ត៌មានសាមញ្ញ ហើយទទួលបាន Script ថ្មីឆាប់រហ័ស សម្រាប់ TikTok / Facebook Reels</p>
+  </header>
+
+  <section class="card">
+    <div class="grid">
+      <div class="field">
+        <label for="moto">ឈ្មោះម៉ូតូ <span style="color:var(--ac)">*</span></label>
+        <input id="moto" placeholder="Honda Dream 2025">
+      </div>
+      <div class="field">
+        <label for="price">តម្លៃពេញ</label>
+        <input id="price" placeholder="$1,950">
+      </div>
+      <div class="field">
+        <label for="deposit">ប្រាក់កក់</label>
+        <input id="deposit" placeholder="$300">
+      </div>
+      <div class="field">
+        <label for="monthly">បង់ប្រចាំខែ</label>
+        <input id="monthly" placeholder="$85">
+      </div>
+      <div class="field">
+        <label for="term">រយៈពេលបង់</label>
+        <input id="term" placeholder="24 ខែ">
+      </div>
+      <div class="field">
+        <label for="contact">លេខទំនាក់ទំនង / ទីតាំង</label>
+        <input id="contact" placeholder="Telegram / 095 123 456">
+      </div>
+      <div class="field full">
+        <label for="docs">ឯកសារដែលត្រូវការ</label>
+        <input id="docs" placeholder="អត្តសញ្ញាណប័ណ្ណ, សៀវភៅគ្រួសារ, រូបថត 4x6">
+      </div>
+      <div class="field full">
+        <label for="pros">ចំណុចខ្លាំងរបស់ម៉ូតូ</label>
+        <textarea id="pros" placeholder="ស៊ីសាំងតិច, ធន់, លក់ត្រឡប់បានលឿន"></textarea>
+      </div>
+      <div class="field">
+        <label for="type">របៀបនិយាយ</label>
+        <select id="type">
+          <option>ផ្តោតតម្លៃថោក</option>
+          <option>ផ្តោតបង់ងាយ / ឯកសារតិច</option>
+          <option>ផ្តោតរចនាបថម៉ូតូ</option>
+          <option>ផ្តោតពីទស្សនៈអតិថិជន</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dur">រយៈពេល Script</label>
+        <select id="dur">
+          <option value="30">30 វិនាទី</option>
+          <option value="45">45 វិនាទី</option>
+          <option value="60" selected>60 វិនាទី (សមរម្យ)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip">💡 កក់តិច</span>
+      <span class="chip">📲 បង់រំលស់</span>
+      <span class="chip">⚡ សរសេរឆាប់</span>
+    </div>
+
+    <div class="row">
+      <button id="go">✨ បង្កើត Script</button>
+      <span id="status" class="status sub" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section id="out" class="hide">
+    <div class="card">
+      <h2>Hook</h2>
+      <div id="hook"></div>
+    </div>
+
+    <div class="card">
+      <h2>Script</h2>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>វិនាទី</th>
+              <th>ឈុត</th>
+              <th>ពាក្យនិយាយ</th>
+              <th>អត្ថបទលើអេក្រង់</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button class="sec" id="cpv">ចម្លងពាក្យនិយាយ</button>
+        <button class="sec" id="cpa">ចម្លងទាំងអស់</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Caption Facebook</h2>
+      <div id="cap"></div>
+      <div class="row">
+        <button class="sec" id="cpc">ចម្លង Caption</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Hook ជំនួសសម្រាប់ A/B Testing</h2>
+      <ol id="alts"></ol>
+    </div>
+
+    <div class="card">
+      <h2>កាមេរ៉ា / Shot ដែលគួរថត</h2>
+      <ul id="shots"></ul>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var fields = ["moto","price","deposit","monthly","term","contact","docs","pros","type","dur"];
+  var last = null;
+
+  try {
+    var saved = JSON.parse(localStorage.getItem("moto-form") || "{}");
+    fields.forEach(function(field){
+      if (saved[field]) $(field).value = saved[field];
+    });
+  } catch (e) {}
+
+  function esc(text){
+    var d = document.createElement("div");
+    d.textContent = text == null ? "" : String(text);
+    return d.innerHTML;
+  }
+
+  function copy(text, btn){
+    var old = btn.textContent;
+    function ok(){
+      btn.textContent = "✓ បានចម្លង";
+      setTimeout(function(){ btn.textContent = old; }, 1300);
+    }
+    try {
+      navigator.clipboard.writeText(text).then(ok, function(){ fallback(); });
+    } catch (e) {
+      fallback();
+    }
+    function fallback(){
+      var t = document.createElement("textarea");
+      t.value = text;
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand("copy"); ok(); } catch (e) {}
+      document.body.removeChild(t);
+    }
+  }
+
+  function buildScript(v){
+    var moto = v.moto || "ម៉ូតូ";
+    var price = v.price || "តម្លៃពេញ";
+    var deposit = v.deposit || "ប្រាក់កក់";
+    var monthly = v.monthly || "បង់ប្រចាំខែ";
+    var term = v.term || "24 ខែ";
+    var contact = v.contact || "លេខទំនាក់ទំនង";
+    var docs = v.docs || "អត្តសញ្ញាណប័ណ្ណ / សៀវភៅគ្រួសារ / រូបថត";
+    var pros = v.pros || "ស៊ីសាំងតិច, ធន់, លក់ត្រឡប់លឿន";
+    var type = v.type || "ផ្តោតតម្លៃថោក";
+    var duration = Number(v.dur) || 60;
+
+    var hook = "មិនចាំបាច់សន្សំយូរទេ! មាន " + moto + " ថ្មីសម្រាប់អ្នកដែលចង់ចាប់ផ្ដើមដោយកក់តិច និងបង់ស្រួល!";
+    if (type.indexOf("បង់ងាយ") !== -1) {
+      hook = "អតិថិជនដែលចង់ទិញម៉ូតូដោយមិនបង់ច្រើន អាចចាប់ផ្ដើមជាមួយ " + moto + " ថ្មីនេះបានយ៉ាងងាយស្រួល";
+    }
+    if (type.indexOf("រចនាបថ") !== -1) {
+      hook = "កំពូលម៉ូតូដែលមានរចនាបថស្អាត ធន់ និងសមនឹងទាមទារជីវិតប្រចាំថ្ងៃ";
+    }
+    if (type.indexOf("អតិថិជន") !== -1) {
+      hook = "មិនត្រឹមតែស្អាតប៉ុណ្ណោះទេ គឺបង់រំលស់ស្រួល និងសមស្របជាមួយជីវភាពប្រចាំថ្ងៃ";
+    }
+
+    var rows = [
+      {
+        time: "0-3s",
+        visual: "បង្ហាញរូបម៉ូតូពីមុខ ឬជ្រុង",
+        voiceover: "សួរស្តីអ្នក! នេះคือ " + moto + " ដែលមានរចនា ស្អាត ធន់ និងបង់ជាប្រចាំខែដ៏ស្រួល!",
+        text: moto + " | " + price + " | កក់ " + deposit + " | " + monthly + "/ខែ"
+      },
+      {
+        time: "3-7s",
+        visual: "បង្ហាញព័ត៌មានតម្លៃ និងប្រាក់កក់",
+        voiceover: "តម្លៃពេញ " + price + " ប្រាក់កក់ " + deposit + " និងបង់ប្រចាំខែ " + monthly + " ក្នុងរយៈ " + term + " យ៉ាងងាយស្រួល។",
+        text: "ឯកសារតិច - " + docs
+      },
+      {
+        time: "7-11s",
+        visual: "បង្ហាញចំណុចខ្លាំងនៃម៉ូតូ",
+        voiceover: "" + pros + "។ វាជាអ្នកដែលចូលចិត្តភាពស្អាត និងសមត្ថភាពប្រើប្រាស់ប្រចាំថ្ងៃ។",
+        text: "ប្រកបដោយសុវត្ថិភាព និងលក់ត្រឡប់បាន"
+      },
+      {
+        time: "11-" + duration + "s",
+        visual: "បង្ហាញ CTA ជិតបញ្ចប់",
+        voiceover: "ប្រសិនបើអ្នកចង់មាន " + moto + " ដោយមិនប៉ះកាសំណល់ យើងនៅទីនេះជួយ។ " + contact + " សម្រាប់ព័ត៌មានបន្ថែម និងការកក់។",
+        text: "Call now: " + contact
+      }
+    ];
+
+    var caption = "🚀 " + moto + " ថ្មី!\n\n💰 តម្លៃពេញ: " + price + "\n💸 កក់: " + deposit + "\n📆 បង់ប្រចាំខែ: " + monthly + " / " + term + "\n✅ ឯកសារ: " + docs + "\n✨ ចំណុចខ្លាំង: " + pros + "\n\n📞 " + contact + "\n\n#ម៉ូតូ #ម៉ូតូថ្មី #បង់រំលស់ #លក់ម៉ូតូ";
+
+    var alt_hooks = [
+      "តម្លៃបង់រំលស់ស្រួល! " + moto + " មានហើយសម្រាប់អ្នកចង់ចាប់ផ្តើមដោយកក់តិច។",
+      "លុយតិចទេ? មើល " + moto + " នេះ! បង់ប្រចាំខែ " + monthly + " ស្រួលណាស់។",
+      "ស្អាត សេរី និងងាយបង់! " + moto + " ជាជម្រើសដ៏ល្អសម្រាប់អ្នកចង់បានរថយន្តថ្មី"
+    ];
+
+    var shots = [
+      "បង្ហាញរូបម៉ូតូពីជ្រុងមុខ",
+      "បង្ហាញព័ត៌មានកក់ និងបង់រំលស់",
+      "បង្ហាញតម្លៃ និងចំណុចខ្លាំង",
+      "បង្ហាញលេខទំនាក់ទំនង / Telegram / Facebook"
+    ];
+
+    return { hook: hook, rows: rows, caption: caption, alt_hooks: alt_hooks, shots: shots };
+  }
+
+  async function generateScript(v){
+    var win = window;
+    if (win.claude && typeof win.claude.use === "function") {
+      try {
+        var sample = await win.claude.use("sample");
+        if (sample && typeof sample.json === "function") {
+          var prompt = "អ្នកគឺជា Copywriter ម្នាក់ដែលជំនាញក្នុងការសរសេរ Script វីដេអូខ្លីសម្រាប់ TikTok / Facebook Reels ដើម្បីលក់ម៉ូតូ និងបង់រំលស់នៅកម្ពុជា។\n"
+            + "គោលការណ៍៖ រយៈពេលសរុបមិនលើស " + (v.dur || 60) + " វិនាទី។ Hook ត្រូវមានអារម្មណ៍ទាក់ទាញក្នុង 3 វិនាទីដំបូង។ ប្រើភាសាខ្មែរសាមញ្ញ និងធម្មតា។ បញ្ជាក់តម្លៃ, កក់, បង់ប្រចាំខែ, រយៈពេល, ឯកសារ, ចំណុចខ្លាំង, និងទំនាក់ទំនង។ បិទដោយ CTA ច្បាស់។\n\n"
+            + "ព័ត៌មាន៖\nម៉ូតូ៖ " + (v.moto || "") + "\nតម្លៃពេញ៖ " + (v.price || "") + "\nប្រាក់កក់៖ " + (v.deposit || "") + "\nបង់ប្រចាំខែ៖ " + (v.monthly || "") + "\nរយៈពេលបង់៖ " + (v.term || "") + "\nឯកសារ៖ " + (v.docs || "") + "\nចំណុចខ្លាំង៖ " + (v.pros || "") + "\nទំនាក់ទំនង៖ " + (v.contact || "") + "\nប្រភេទ Script៖ " + (v.type || "") + "\n\n"
+            + "ប្រញាប់ឆ្លើយតបជា JSON ប៉ុណ្ណោះ ដោយគ្មានអត្ថបទបន្ថែម៖ {\"hook\":string,\"rows\":[{\"time\":string,\"visual\":string,\"voiceover\":string,\"text\":string}],\"caption\":string,\"alt_hooks\":[string,string],\"shots\":[string]}";
+          var d = await sample.json(prompt);
+          if (d && d.hook && Array.isArray(d.rows) && d.caption) {
+            return d;
+          }
+        }
+      } catch (e) {
+        // Fall back to local generator if AI is unavailable or fails.
+      }
+    }
+    return buildScript(v);
+  }
+
+  function saveForm(){
+    var values = {};
+    fields.forEach(function(field){ values[field] = $(field).value.trim(); });
+    try { localStorage.setItem("moto-form", JSON.stringify(values)); } catch (e) {}
+  }
+
+  $("go").onclick = async function(){
+    var v = {};
+    fields.forEach(function(field){ v[field] = $(field).value.trim(); });
+    saveForm();
+
+    if (!v.moto) {
+      $("status").className = "status sub err";
+      $("status").textContent = "សូមបញ្ចូលឈ្មោះម៉ូតូ";
+      return;
+    }
+
+    var btn = $("go");
+    btn.disabled = true;
+    $("status").className = "status sub";
+    $("status").textContent = "កំពុងរៀបចំ Script...";
+
+    try {
+      var d = await generateScript(v);
+      last = d;
+      $("hook").textContent = d.hook || "";
+      $("rows").innerHTML = (d.rows || []).map(function(r){
+        return "<tr><td>" + esc(r.time) + "</td><td>" + esc(r.visual) + "</td><td>" + esc(r.voiceover) + "</td><td>" + esc(r.text) + "</td></tr>";
+      }).join("");
+      $("cap").textContent = d.caption || "";
+      $("alts").innerHTML = (d.alt_hooks || []).map(function(h){
+        return "<li>" + esc(h) + "</li>";
+      }).join("");
+      $("shots").innerHTML = (d.shots || []).map(function(h){
+        return "<li>" + esc(h) + "</li>";
+      }).join("");
+      $("out").classList.remove("hide");
+      $("status").className = "status sub ok";
+      $("status").textContent = "បង្កើត Script រួចរាល់";
+      $("out").scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      $("status").className = "status sub err";
+      $("status").textContent = "មានបញ្ហា សូមព្យាយាមម្តងទៀត";
+    }
+
+    btn.disabled = false;
+  };
+
+  $("cpv").onclick = function(){
+    if (!last) return;
+    copy((last.rows || []).map(function(r){ return r.voiceover; }).join("\n"), $("cpv"));
+  };
+
+  $("cpc").onclick = function(){
+    if (!last) return;
+    copy(last.caption || "", $("cpc"));
+  };
+
+  $("cpa").onclick = function(){
+    if (!last) return;
+    copy(
+      "HOOK: " + last.hook + "\n\n" +
+      (last.rows || []).map(function(r){ return r.time + " | " + r.visual + " | " + r.voiceover + " | " + r.text; }).join("\n") +
+      "\n\nCAPTION:\n" + last.caption + "\n\nALT HOOKS:\n" + (last.alt_hooks || []).join("\n") + "\n\nSHOTS:\n" + (last.shots || []).join("\n"),
+      $("cpa")
+    );
+  };
+
+  fields.forEach(function(field){
+    $(field).addEventListener("input", saveForm);
+    $(field).addEventListener("change", saveForm);
+  });
+})();
+</script>
+</body>
+</html>
